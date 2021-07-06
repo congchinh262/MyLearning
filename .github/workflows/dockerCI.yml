@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build ./docker-build --file Dockerfile --tag ${{secrets.DOCKER_USER_NAME}}/democi:lastest
+      run: docker build ./docker-build --tag ${{secrets.DOCKER_USER_NAME}}/democi:lastest
