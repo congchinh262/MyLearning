@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: redirect to root folder
-      run: cd /docker-build
+      run: cd ./docker-build
     - name: auto bump npm version
       uses: 'phips28/gh-action-bump-version@master'
       with: 
