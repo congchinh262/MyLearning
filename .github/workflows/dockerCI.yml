@@ -17,10 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set tag env
-      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      run: | 
+        echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
     - name: Login to Docker
       run: docker login -u ${{secrets.DOCKER_USER_NAME}} -p ${{secrets.DOCKER_PASSWORD}}
     - name: Build the Docker image
-      run: docker build ./docker-build --tag ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci${{ env.RELEASE_VERSION }}
+      run: docker build ./docker-build --tag ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci-${{ env.RELEASE_VERSION }}
     - name: Push the Docker image
-      run: docker push ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci${{ env.RELEASE_VERSION }}
+      run: docker push ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci-${{ env.RELEASE_VERSION }}
