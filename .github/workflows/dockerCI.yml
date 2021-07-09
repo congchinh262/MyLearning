@@ -3,6 +3,8 @@ name: Docker Image CI
 on:
   push:
     branches: [ main ]
+    tags:
+      - 'v.*.*.*'
   pull_request:
     branches: [ main ]
 
@@ -14,9 +16,11 @@ jobs:
     #not run with commit started with "RELEASE"
     steps:
     - uses: actions/checkout@v2
+    - name: Set tag env
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
     - name: Login to Docker
       run: docker login -u ${{secrets.DOCKER_USER_NAME}} -p ${{secrets.DOCKER_PASSWORD}}
     - name: Build the Docker image
-      run: docker build ./docker-build --tag ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci
+      run: docker build ./docker-build --tag ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci${{ env.RELEASE_VERSION }}
     - name: Push the Docker image
-      run: docker push ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci
+      run: docker push ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci${{ env.RELEASE_VERSION }}
