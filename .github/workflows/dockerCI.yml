@@ -14,8 +14,9 @@ jobs:
     #not run with commit started with "RELEASE"
     steps:
     - uses: actions/checkout@v2
-    - name: auto bump npm version
+    - name: redirect to root folder
       run: cd /docker-build
+    - name: auto bump npm version
       uses: 'phips28/gh-action-bump-version@master'
       with: 
         minor-wording:  'add,Adds,new'
