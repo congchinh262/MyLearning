@@ -18,7 +18,8 @@ jobs:
       run: cd ./docker-build
     - name: auto bump npm version
       uses: 'phips28/gh-action-bump-version@master'
-      with: 
+      with:
+        PACKAGEJSON_DIR: './docker-build'
         minor-wording:  'add,Adds,new'
         major-wording:  'MAJOR,cut-major'
         patch-wording:  'patch,fixes'
