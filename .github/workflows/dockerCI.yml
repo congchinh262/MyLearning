@@ -15,6 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: auto bump npm version
+      run: cd /docker-build
       uses: 'phips28/gh-action-bump-version@master'
       with: 
         minor-wording:  'add,Adds,new'
