@@ -11,9 +11,16 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    #not run with commit started with "RELEASE"
     steps:
     - uses: actions/checkout@v2
+    - name: auto bump npm version
+      uses: 'phips28/gh-action-bump-version@master'
+      with: 
+        minor-wording:  'add,Adds,new'
+        major-wording:  'MAJOR,cut-major'
+        patch-wording:  'patch,fixes'
+        tag-prefix:  'v'
     - name: Login to Docker
       run: docker login -u ${{secrets.DOCKER_USER_NAME}} -p ${{secrets.DOCKER_PASSWORD}}
     - name: Build the Docker image

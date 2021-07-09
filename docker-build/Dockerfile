@@ -4,6 +4,7 @@ COPY package.json ./
 RUN npm i
 COPY . ./
 RUN npm run build
+CMD [ "install", "build" ]
 
 FROM nginx:1.12-alpine
 COPY /docker-build/build /usr/share/nginx/html
