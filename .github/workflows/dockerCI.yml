@@ -22,3 +22,7 @@ jobs:
       run: docker build ./docker-build --tag ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci-${{ env.RELEASE_VERSION }}
     - name: Push the Docker image
       run: docker push ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci-${{ env.RELEASE_VERSION }}
+    - name: Deploy to Server
+      run: |
+        docker pull ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci-${{ env.RELEASE_VERSION }}
+        docker save ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci-${{ env.RELEASE_VERSION }} | ssh -p ${{secrets.SERVER_PORT}} -C ${SERVER_ADDRESS} "docker load"
