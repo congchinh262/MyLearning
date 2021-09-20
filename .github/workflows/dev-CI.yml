@@ -21,7 +21,7 @@ jobs:
     - name: Build the Docker image
       run: docker build ./docker-build --tag ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci-latest
     - name: Push the Docker image
-      run: docker push ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci-lastest
+      run: docker push ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci-latest
 
     
     
