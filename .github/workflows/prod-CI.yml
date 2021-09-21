@@ -29,7 +29,17 @@ jobs:
         path: ./docker-build
     - name: Set npm version
       run: echo "NPM_VERSION=${{ steps.package-version.outputs.current-version}}" >> $GITHUB_ENV
-      
+    - name: create and publish a new release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: v${{ env.NPM_VERSION }}
+        release_name: Release v${{ env.NPM_VERSION }}
+        body: update version ${{ env.NPM_VERSION }}
+        draft: false
+        prerelease: false
     - name: Build the Docker image
       run: docker build ./docker-build --tag ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci-${{ env.NPM_VERSION }}
     - name: Push the Docker image
