@@ -20,6 +20,8 @@ jobs:
       run: docker login -u ${{secrets.DOCKER_USER_NAME}} -p ${{secrets.DOCKER_PASSWORD}}
     - name: Build the Docker image
       run: docker build ./docker-build --tag ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci-latest
+    - name: dummy step
+      run: echo "aaaaaaaaaaaaa"
     - name: Push the Docker image
       run: docker push ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci-latest
 
