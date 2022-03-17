@@ -1,29 +1,30 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Dev Version CI
+name: Version CI
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'dev/**'
 
 jobs:
-
-  build:
-
+  inscrease-version:
     runs-on: ubuntu-latest
-    #not run with commit started with "RELEASE"
+    steps:
+      - name: Increase version
+        if: "!startsWith(github.event.head_commit.message, '[PATCH]')"
+        run: npm version patch
+        if: "!startsWith(github.event.head_commit.message, '[MINOR]')"
+        run: npm version minor
+        if: "!startsWith(github.event.head_commit.message, '[MAJOR]')"
+        run: npm version major    
+  build:
+    need: 'inscrease-version'
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    # - name: Print version
+    #   run: echo ${{ inscrease-version.outputs. }}
     - name: Login to Docker
       run: docker login -u ${{secrets.DOCKER_USER_NAME}} -p ${{secrets.DOCKER_PASSWORD}}
-    - name: Build the Docker image
-      run: docker build ./docker-build --tag ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci-latest
-    - name: dummy step
-      run: echo "aaaaaaaaaaaaa"
-    - name: Push the Docker image
-      run: docker push ${{secrets.DOCKER_REGISTORY_NAME}}:dockerci-latest
-
-    
-    
+    - name: Deploy to Docker
+      run: npm run release
