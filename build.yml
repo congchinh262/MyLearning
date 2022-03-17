@@ -1,0 +1,5 @@
+version: '3.6'
+services:
+  shedule:
+    image: react-test-app-${npm_package_version}
+    build: ./
