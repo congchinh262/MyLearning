@@ -10,11 +10,13 @@ jobs:
   inscrease-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Increase version
+      - name: Increase patch
         if: "!startsWith(github.event.head_commit.message, '[PATCH]')"
         run: npm version patch
+      - name: Increase minor
         if: "!startsWith(github.event.head_commit.message, '[MINOR]')"
         run: npm version minor
+      - name: Increase major
         if: "!startsWith(github.event.head_commit.message, '[MAJOR]')"
         run: npm version major    
   build:
