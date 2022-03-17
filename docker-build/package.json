@@ -1,6 +1,6 @@
 {
   "name": "docker-build",
-  "version": "v1.1.0",
+  "version": "v1.1.1",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
@@ -15,7 +15,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "docker:build": "docker-compose -f build.yml build",
+    "docker:push": "docker-compose -f build.yml push",
+    "release": "npm run docker:build && npm run docker:push"
   },
   "eslintConfig": {
     "extends": [
