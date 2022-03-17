@@ -20,7 +20,7 @@ jobs:
         if: "!startsWith(github.event.head_commit.message, '[MAJOR]')"
         run: npm version major    
   build:
-    need: 'inscrease-version'
+    needs: inscrease-version
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
